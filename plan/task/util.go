@@ -33,7 +33,7 @@ func resolveImageConfigLogName(v *compiler.Value, format string, a ...interface{
 	return prefix + " " + name
 }
 
-func ParseResolveImageConfigLog(name string) (string, string) {
+func ParseResolveImageConfigLog(name string) (component string, vertexName string) {
 	// Pattern: `@name@ message`. Minimal length is len("@X@ ")
 	if len(name) < 2 || !strings.HasPrefix(name, "@") {
 		return "", name
@@ -44,7 +44,7 @@ func ParseResolveImageConfigLog(name string) (string, string) {
 		return "", name
 	}
 
-	component := name[1 : prefixEndPos+1]
+	component = name[1 : prefixEndPos+1]
 	return component, name[prefixEndPos+3:]
 }
 

@@ -103,15 +103,15 @@ func (c *Client) Do(ctx context.Context, pctx *plancontext.Context, fn DoFunc) e
 
 	eg, gctx := errgroup.WithContext(ctx)
 
-	if c.cfg.TargetPlatform != nil {
-		pctx.Platform.Set(*c.cfg.TargetPlatform)
-	} else {
-		p, err := c.detectPlatform(ctx)
+	p := c.cfg.TargetPlatform
+	if p == nil {
+		var err error
+		p, err = c.detectPlatform(ctx)
 		if err != nil {
 			return err
 		}
-		pctx.Platform.Set(*p)
 	}
+	pctx.Platform.Set(*p)
 
 	// Spawn print function
 	events := make(chan *bk.SolveStatus)
@@ -239,6 +239,7 @@ func (c *Client) buildfn(ctx context.Context, pctx *plancontext.Context, fn DoFu
 
 		// Compute output overlay
 		res := bkgw.NewResult()
+		// the: what do we do if fn is empty? Shouldn't we exit earlier?
 		if fn != nil {
 			err := fn(ctx, s)
 			if err != nil {
@@ -269,7 +270,7 @@ func (c *Client) buildfn(ctx context.Context, pctx *plancontext.Context, fn DoFu
 }
 
 func (c *Client) logSolveStatus(ctx context.Context, pctx *plancontext.Context, ch chan *bk.SolveStatus) error {
-	parseName := func(v *bk.Vertex) (string, string) {
+	parseName := func(v *bk.Vertex) (component string, vertexName string) {
 		// For all cases besides resolve image config, the component is set in the progress group id
 		if v.ProgressGroup != nil {
 			return v.ProgressGroup.Id, v.Name
