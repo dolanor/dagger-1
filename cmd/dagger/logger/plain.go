@@ -75,6 +75,32 @@ func formatLevel(event map[string]interface{}) string {
 	}
 }
 
+func formatLevelTerm(event map[string]interface{}) consoleText {
+	level := zerolog.DebugLevel
+	if l, ok := event[zerolog.LevelFieldName].(string); ok {
+		level, _ = zerolog.ParseLevel(l)
+	}
+
+	switch level {
+	case zerolog.TraceLevel:
+		return newConsoleText("TRC", "magenta")
+	case zerolog.DebugLevel:
+		return newConsoleText("DBG", "yellow")
+	case zerolog.InfoLevel:
+		return newConsoleText("INF", "green")
+	case zerolog.WarnLevel:
+		return newConsoleText("WRN", "red")
+	case zerolog.ErrorLevel:
+		return newConsoleText("ERR", "red")
+	case zerolog.FatalLevel:
+		return newConsoleText("FTL", "red")
+	case zerolog.PanicLevel:
+		return newConsoleText("PNC", "red")
+	default:
+		return newConsoleText("???", "bold")
+	}
+}
+
 func formatTimestamp(event map[string]interface{}) string {
 	ts, ok := event[zerolog.TimestampFieldName].(string)
 	if !ok {
@@ -86,6 +112,19 @@ func formatTimestamp(event map[string]interface{}) string {
 		panic(err)
 	}
 	return fmt.Sprintf("[dark_gray]%s[reset]", t.Format(time.Kitchen))
+}
+
+func formatTimestampTerm(event map[string]interface{}) consoleText {
+	ts, ok := event[zerolog.TimestampFieldName].(string)
+	if !ok {
+		return newConsoleText("???", "")
+	}
+
+	t, err := time.Parse(zerolog.TimeFieldFormat, ts)
+	if err != nil {
+		panic(err)
+	}
+	return newConsoleText(t.Format(time.Kitchen), "dark_gray")
 }
 
 func formatMessage(event map[string]interface{}) string {
@@ -121,6 +160,42 @@ func formatMessage(event map[string]interface{}) string {
 		return fmt.Sprintf("[red]%s[reset]", message)
 	default:
 		return message
+	}
+}
+
+func formatMessageTerm(event map[string]interface{}) consoleText {
+	message, ok := event[zerolog.MessageFieldName].(string)
+	if !ok {
+		return newConsoleText("", "")
+	}
+	message = strings.TrimSpace(message)
+
+	if err, ok := event[zerolog.ErrorFieldName].(string); ok && err != "" {
+		message = message + ": " + err
+	}
+
+	level := zerolog.DebugLevel
+	if l, ok := event[zerolog.LevelFieldName].(string); ok {
+		level, _ = zerolog.ParseLevel(l)
+	}
+
+	switch level {
+	case zerolog.TraceLevel:
+		return newConsoleText(message, "dim")
+	case zerolog.DebugLevel:
+		return newConsoleText(message, "dim")
+	case zerolog.InfoLevel:
+		return newConsoleText(message, "")
+	case zerolog.WarnLevel:
+		return newConsoleText(message, "yellow")
+	case zerolog.ErrorLevel:
+		return newConsoleText(message, "red")
+	case zerolog.FatalLevel:
+		return newConsoleText(message, "red")
+	case zerolog.PanicLevel:
+		return newConsoleText(message, "red")
+	default:
+		return newConsoleText(message, "")
 	}
 }
 
@@ -185,6 +260,54 @@ func formatFields(entry map[string]interface{}) string {
 		return fields[i] < fields[j]
 	})
 	return fmt.Sprintf("    [bold]%s[reset]", strings.Join(fields, " "))
+}
+
+func formatFieldsTerm(entry map[string]interface{}) consoleText {
+	// these are the fields we don't want to expose, either because they're
+	// already part of the Log structure or because they're internal
+	fieldSkipList := map[string]struct{}{
+		zerolog.MessageFieldName:   {},
+		zerolog.LevelFieldName:     {},
+		zerolog.TimestampFieldName: {},
+		zerolog.ErrorFieldName:     {},
+		zerolog.CallerFieldName:    {},
+		"environment":              {},
+		"task":                     {},
+		"state":                    {},
+	}
+
+	fields := []string{}
+	for key, value := range entry {
+		if _, ok := fieldSkipList[key]; ok {
+			continue
+		}
+		switch v := value.(type) {
+		case string:
+			fields = append(fields, fmt.Sprintf("%s=%s", key, v))
+		case int:
+			fields = append(fields, fmt.Sprintf("%s=%v", key, v))
+		case float64:
+			dur := time.Duration(v) * time.Millisecond
+			s := dur.Round(100 * time.Millisecond).String()
+			fields = append(fields, fmt.Sprintf("%s=%s", key, s))
+		case nil:
+			fields = append(fields, fmt.Sprintf("%s=null", key))
+		default:
+			o, err := json.MarshalIndent(v, "", "    ")
+			if err != nil {
+				panic(err)
+			}
+			fields = append(fields, fmt.Sprintf("%s=%s", key, o))
+		}
+	}
+
+	if len(fields) == 0 {
+		return newConsoleText("", "")
+	}
+	sort.SliceStable(fields, func(i, j int) bool {
+		return fields[i] < fields[j]
+	})
+	return newConsoleText("    "+strings.Join(fields, " "), "bold")
 }
 
 // hashColor returns a consistent color for a given string

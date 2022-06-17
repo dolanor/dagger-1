@@ -476,10 +476,10 @@ func linesPerGroup(width, height int, messages []Message) int {
 
 func formatEvent(event Event, width int) (message string, height int) {
 	message = colorize.Color(fmt.Sprintf("%s %s %s%s",
-		formatTimestamp(event),
-		formatLevel(event),
-		formatMessage(event),
-		formatFields(event),
+		formatTimestampTerm(event).StyledString(),
+		formatLevelTerm(event).StyledString(),
+		formatMessageTerm(event).StyledString(),
+		formatFieldsTerm(event).StyledString(),
 	))
 
 	message = pad(message, width)
@@ -569,19 +569,20 @@ func makeLine(prefix string, text string, timer string, width int) string {
 	return out
 }
 
-func colorLine(state task.State, text string) string {
-	var colored string
+func colorLine(state task.State, text string) consoleText {
+	var colored consoleText
 	switch state {
+	// TODO replace with colorize?
 	case task.StateComputing:
-		colored = aec.Apply(text, aec.LightBlueF)
+		colored = newConsoleText(text, "light_blue")
 	case task.StateSkipped:
-		colored = aec.Apply(text, aec.LightCyanF)
+		colored = newConsoleText(text, "light_cyan")
 	case task.StateCanceled:
-		colored = aec.Apply(text, aec.LightYellowF)
+		colored = newConsoleText(text, "light_yellow")
 	case task.StateFailed:
-		colored = aec.Apply(text, aec.LightRedF)
+		colored = newConsoleText(text, "light_red")
 	case task.StateCompleted:
-		colored = aec.Apply(text, aec.LightGreenF)
+		colored = newConsoleText(text, "light_green")
 	}
 	return colored
 }
@@ -622,7 +623,7 @@ func printGroup(group Group, width, maxLines int, cons io.Writer) int {
 		colored := colorLine(group.CurrentState, line)
 
 		// Print
-		fmt.Fprint(cons, colored)
+		fmt.Fprint(cons, colored.StyledString())
 		lineCount++
 	}
 
@@ -667,9 +668,10 @@ func pad(message string, width int) string {
 	return message
 }
 
-func termLen(message string, width int) int {
+// termLen computes correct text size once escape codes have been applied.
+func termLen(message string) int {
 	// FIXME: use more dynamic y value?
-	vterm := vt100.NewVT100(100, width)
+	vterm := vt100.NewVT100(25, 80)
 	vterm.Write([]byte(message))
 
 	content := vterm.Content
@@ -698,6 +700,7 @@ func formatGroupLine(event Event, width int) (message string, nbLines int) {
 	message += "\n"
 
 	// color
+	// TODO maybe use [dim] from colorize.Color instead?
 	message = aec.Apply(message, aec.Faint)
 
 	return message, 1
@@ -717,4 +720,33 @@ func getSize(cons ConsoleSizer) (width, height int) {
 	}
 
 	return width, height
+}
+
+type consoleText struct {
+	text  string
+	size  int
+	style string
+	faint bool
+}
+
+func newConsoleText(text string, style string) consoleText {
+	return consoleText{
+		text:  text,
+		style: style,
+		size:  termLen(text),
+	}
+}
+
+func (t consoleText) StyledString() string {
+	if t.style == "" {
+		return t.text
+	}
+
+	text := colorize.Color(fmt.Sprintf("[%s]%s[reset]", t.style, t.text))
+
+	if t.faint {
+		text = aec.Apply(text, aec.Faint)
+	}
+
+	return text
 }

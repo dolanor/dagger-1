@@ -448,7 +448,7 @@ func TestColorLine(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.String(), func(t *testing.T) {
 			got := colorLine(c, text)
-			compareTerminalLineLength(t, text, got)
+			compareTerminalLineLength(t, text, got.StyledString())
 		})
 	}
 }
@@ -607,6 +607,6 @@ func TestFormatGroupLine(t *testing.T) {
 }
 
 func TestTermLen(t *testing.T) {
-	n := termLen("  \x1b[2m\x1b[31mABC   some test    \x1b[0m   ", 3)
+	n := termLen("  \x1b[2m\x1b[31mABC   some test    \x1b[0m   ")
 	require.Equal(t, 17, n)
 }
