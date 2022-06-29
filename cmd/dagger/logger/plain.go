@@ -114,17 +114,17 @@ func formatTimestamp(event map[string]interface{}) string {
 	return fmt.Sprintf("[dark_gray]%s[reset]", t.Format(time.Kitchen))
 }
 
-func formatTimestampTerm(event map[string]interface{}) consoleText {
+func formatTimestampTerm(event map[string]interface{}) *logElem {
 	ts, ok := event[zerolog.TimestampFieldName].(string)
 	if !ok {
-		return newConsoleText("???", "")
+		return &logElem{"???", "", nil}
 	}
 
 	t, err := time.Parse(zerolog.TimeFieldFormat, ts)
 	if err != nil {
 		panic(err)
 	}
-	return newConsoleText(t.Format(time.Kitchen), "dark_gray")
+	return &logElem{t.Format(time.Kitchen), "dark_gray", nil}
 }
 
 func formatMessage(event map[string]interface{}) string {

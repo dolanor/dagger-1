@@ -482,9 +482,18 @@ func formatEvent(event Event, width int) (message string, height int) {
 		formatFieldsTerm(event).StyledString(),
 	))
 
-	message = pad(message, width)
+	le := &logElem{"%s %s %s%s", "",
+		[]*logElem{
+			formatTimestampTerm(event),
+			//formatLevelTerm(event),
+			//formatMessageTerm(event),
+			//formatFieldsTerm(event),
+		},
+	}
 
-	message += "\n"
+	le = padElem(le, width)
+
+	le.format += "\n"
 
 	vterm := vt100.NewVT100(100, width)
 	vterm.Write([]byte(message))
@@ -666,6 +675,13 @@ func pad(message string, width int) string {
 		message += strings.Repeat(" ", delta)
 	}
 	return message
+}
+
+func padElem(elem *logElem, width int) *logElem {
+	if delta := width - elem.Len(); delta > 0 {
+		elem.format += strings.Repeat(" ", delta)
+	}
+	return elem
 }
 
 // termLen computes correct text size once escape codes have been applied.
