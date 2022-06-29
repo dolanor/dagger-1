@@ -803,8 +803,8 @@ func (e *logElem) StyledString() string {
 
 func formatGroupLine(event Event, width int) (message string, nbLines int) {
 	message = colorize.Color(fmt.Sprintf("%s%s",
-		formatMessage(event),
-		formatFields(event),
+		formatMessageTerm(event).StyledString(),
+		formatFieldsTerm(event).StyledString(),
 	))
 
 	message = trimMessage(message, width)
