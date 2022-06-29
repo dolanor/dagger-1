@@ -485,7 +485,7 @@ func formatEvent(event Event, width int) (message string, height int) {
 	le := &logElem{"%s %s %s%s", "",
 		[]*logElem{
 			formatTimestampTerm(event),
-			//formatLevelTerm(event),
+			formatLevelTerm(event),
 			//formatMessageTerm(event),
 			//formatFieldsTerm(event),
 		},

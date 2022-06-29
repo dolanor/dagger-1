@@ -75,7 +75,7 @@ func formatLevel(event map[string]interface{}) string {
 	}
 }
 
-func formatLevelTerm(event map[string]interface{}) consoleText {
+func formatLevelTerm(event map[string]interface{}) *logElem {
 	level := zerolog.DebugLevel
 	if l, ok := event[zerolog.LevelFieldName].(string); ok {
 		level, _ = zerolog.ParseLevel(l)
@@ -83,21 +83,21 @@ func formatLevelTerm(event map[string]interface{}) consoleText {
 
 	switch level {
 	case zerolog.TraceLevel:
-		return newConsoleText("TRC", "magenta")
+		return &logElem{"TRC", "magenta", nil}
 	case zerolog.DebugLevel:
-		return newConsoleText("DBG", "yellow")
+		return &logElem{"DBG", "yellow", nil}
 	case zerolog.InfoLevel:
-		return newConsoleText("INF", "green")
+		return &logElem{"INF", "green", nil}
 	case zerolog.WarnLevel:
-		return newConsoleText("WRN", "red")
+		return &logElem{"WRN", "red", nil}
 	case zerolog.ErrorLevel:
-		return newConsoleText("ERR", "red")
+		return &logElem{"ERR", "red", nil}
 	case zerolog.FatalLevel:
-		return newConsoleText("FTL", "red")
+		return &logElem{"FTL", "red", nil}
 	case zerolog.PanicLevel:
-		return newConsoleText("PNC", "red")
+		return &logElem{"PNC", "red", nil}
 	default:
-		return newConsoleText("???", "bold")
+		return &logElem{"???", "bold", nil}
 	}
 }
 
