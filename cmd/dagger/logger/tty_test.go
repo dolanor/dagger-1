@@ -610,3 +610,28 @@ func TestTermLen(t *testing.T) {
 	n := termLen("  \x1b[2m\x1b[31mABC   some test    \x1b[0m   ")
 	require.Equal(t, 17, n)
 }
+
+func TestLogElemLen(t *testing.T) {
+	l := &logElem{"%v %v: %v %v", "",
+		[]*logElem{
+			&logElem{"12:28PM", "yellow", nil},
+			&logElem{"ERR", "red", nil},
+			&logElem{"YO", "cyan", nil},
+			&logElem{"LO", "magenta", nil},
+		},
+	}
+
+	lenLog := l.Len()
+	t.Logf("String: %q", l.String())
+	t.Logf(`Styled: "%v"`, l.StyledString())
+	t.Logf("Styled: %q", l.StyledString())
+
+	var cc []interface{}
+	for _, c := range l.children {
+		cc = append(cc, c.String())
+	}
+
+	if lenLog != len(fmt.Sprintf(l.format, cc...)) {
+		t.Fatalf("want: %d, got: %d", lenLog, len(fmt.Sprintf(l.format, cc...)))
+	}
+}

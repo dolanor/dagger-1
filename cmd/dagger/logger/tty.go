@@ -688,6 +688,119 @@ func termLen(message string) int {
 	return lTrimmed
 }
 
+func styledPrintf(format string, args ...consoleText) consoleText {
+	var ss []interface{}
+	for _, v := range args {
+		ss = append(ss, v.text)
+	}
+
+	s := fmt.Sprintf(format, ss...)
+
+	return newConsoleText(s, "")
+}
+
+type logLine struct {
+	format   string
+	children []*logElem
+}
+
+func (l *logLine) String() string {
+	var joined string
+	if l.format != "" {
+		var ff []string
+		for range l.children {
+			ff = append(ff, "%v")
+		}
+		joined = strings.Join(ff, " ")
+	}
+
+	l.format += joined
+
+	var cc []interface{}
+	for _, c := range l.children {
+		cc = append(cc, c.String())
+	}
+
+	return fmt.Sprintf(l.format, cc...)
+}
+
+func (l *logLine) StyledString() string {
+	var joined string
+	if l.format != "" {
+		var ff []string
+		for range l.children {
+			ff = append(ff, "%v")
+		}
+		joined = strings.Join(ff, " ")
+	}
+
+	l.format += joined
+
+	var cc []interface{}
+	for _, c := range l.children {
+		cc = append(cc, c.StyledString())
+	}
+
+	return fmt.Sprintf(l.format, cc...)
+}
+
+type logElem struct {
+	format string
+	style  string
+
+	children []*logElem
+}
+
+func (e *logElem) Len() int {
+	return len(e.String())
+}
+
+func (e *logElem) String() string {
+	e.format = autoformat(e.format, e.children)
+
+	var cc []interface{}
+	for _, c := range e.children {
+		cc = append(cc, c.String())
+	}
+
+	return fmt.Sprintf(e.format, cc...)
+
+	//return fmt.Sprintf(e.format, cc...)
+}
+
+// autoformat adds %v for each children if it is missing from format.
+func autoformat(format string, children []*logElem) string {
+	var joined string
+	if format == "" || !strings.Contains(format, "%") {
+		var ff []string
+		for range children {
+			ff = append(ff, "%v")
+		}
+		joined = strings.Join(ff, " ")
+	}
+	format += joined
+
+	return format
+}
+
+// StyledString gives the string styled for the terminal with ANSI escape codes.
+func (e *logElem) StyledString() string {
+	e.format = autoformat(e.format, e.children)
+
+	var cc []interface{}
+	for _, c := range e.children {
+		cc = append(cc, c.StyledString())
+	}
+
+	if e.style == "" {
+		return fmt.Sprintf(e.format, cc...)
+	}
+
+	colored := colorize.Color(fmt.Sprintf("[%s]%s[reset]", e.style, e.format))
+
+	return fmt.Sprintf(colored, cc...)
+}
+
 func formatGroupLine(event Event, width int) (message string, nbLines int) {
 	message = colorize.Color(fmt.Sprintf("%s%s",
 		formatMessage(event),
