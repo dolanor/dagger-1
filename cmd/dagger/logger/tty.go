@@ -428,6 +428,11 @@ func print(lineCount *int, width, height int, cons io.Writer, messages []Message
 		}
 	}
 
+	// if we display less lines than before, we bring the cursor up
+	// if we displayed 100 lines before, and 80 now, we bring the cursor Up 20 times.
+	// TODO the: investigate this behaviour if it is what is needed/expected
+	// TODO the: handle the cases when user input some long text or \n
+	//           read from stdin? block stdin?
 	if diff := *lineCount - lnCount; diff > 0 {
 		for i := 0; i < diff; i++ {
 			fmt.Fprintln(cons, strings.Repeat(" ", width))
@@ -654,6 +659,7 @@ func trimMessage(message string, width int) string {
 	s := message
 
 	for sLen := utf8.RuneCountInString(s); sLen > width; sLen = utf8.RuneCountInString(s) {
+		// TODO the: adapt the number based on the grapheme length
 		offset := 4
 		if sLen < 4 {
 			offset = sLen
