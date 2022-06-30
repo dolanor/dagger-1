@@ -489,9 +489,9 @@ func formatEvent(event Event, width int) (message string, height int) {
 	le.format += "\n"
 
 	vterm := vt100.NewVT100(100, width)
-	vterm.Write([]byte(message))
+	vterm.Write([]byte(le.StyledString()))
 
-	return message, vterm.UsedHeight()
+	return le.StyledString(), vterm.UsedHeight()
 }
 
 func printEvent(w io.Writer, event Event, width int) int {
@@ -642,7 +642,7 @@ func printGroupLine(event Event, width int, cons io.Writer) (nbLines int) {
 	message, nbLines := formatGroupLine(event, width)
 
 	// Print
-	fmt.Fprint(cons, message)
+	fmt.Fprint(cons, message.StyledString())
 
 	return nbLines
 }
@@ -661,6 +661,22 @@ func trimMessage(message string, width int) string {
 		s = s[0:sLen-offset] + "…"
 	}
 	return s
+}
+
+func trimLogElem(elem *logElem, width int) *logElem {
+	if width <= 0 {
+		return elem
+	}
+
+	for sLen := elem.Len(); sLen > width; sLen = elem.Len() {
+		// TODO the: adapt the number based on the grapheme length
+		offset := 4
+		if sLen < 4 {
+			offset = sLen
+		}
+		elem.format = elem.format[0:sLen-offset] + "…"
+	}
+	return elem
 }
 
 func pad(message string, width int) string {
@@ -810,22 +826,27 @@ func (e *logElem) StyledString() string {
 	return fmt.Sprintf(colored, cc...)
 }
 
-func formatGroupLine(event Event, width int) (message string, nbLines int) {
-	message = colorize.Color(fmt.Sprintf("%s%s",
-		formatMessageTerm(event).StyledString(),
-		formatFieldsTerm(event).StyledString(),
-	))
+func formatGroupLine(event Event, width int) (elem *logElem, nbLines int) {
 
-	message = trimMessage(message, width)
+	le := &logElem{"%s%s", "",
+		[]*logElem{
+			formatMessageTerm(event),
+			formatFieldsTerm(event),
+		},
+	}
 
-	message = pad(message, width)
-	message += "\n"
+	le = trimLogElem(le, width)
 
-	// color
-	// TODO maybe use [dim] from colorize.Color instead?
-	message = aec.Apply(message, aec.Faint)
+	le = padElem(le, width)
+	le.format += "\n"
 
-	return message, 1
+	dimmed := &logElem{"%s", "dim",
+		[]*logElem{
+			le,
+		},
+	}
+
+	return dimmed, 1
 }
 
 func getSize(cons ConsoleSizer) (width, height int) {
