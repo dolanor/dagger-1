@@ -475,19 +475,12 @@ func linesPerGroup(width, height int, messages []Message) int {
 }
 
 func formatEvent(event Event, width int) (message string, height int) {
-	message = colorize.Color(fmt.Sprintf("%s %s %s%s",
-		formatTimestampTerm(event).StyledString(),
-		formatLevelTerm(event).StyledString(),
-		formatMessageTerm(event).StyledString(),
-		formatFieldsTerm(event).StyledString(),
-	))
-
 	le := &logElem{"%s %s %s%s", "",
 		[]*logElem{
 			formatTimestampTerm(event),
 			formatLevelTerm(event),
-			//formatMessageTerm(event),
-			//formatFieldsTerm(event),
+			formatMessageTerm(event),
+			formatFieldsTerm(event),
 		},
 	}
 

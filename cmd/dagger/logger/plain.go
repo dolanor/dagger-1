@@ -163,10 +163,10 @@ func formatMessage(event map[string]interface{}) string {
 	}
 }
 
-func formatMessageTerm(event map[string]interface{}) consoleText {
+func formatMessageTerm(event map[string]interface{}) *logElem {
 	message, ok := event[zerolog.MessageFieldName].(string)
 	if !ok {
-		return newConsoleText("", "")
+		return &logElem{"", "", nil}
 	}
 	message = strings.TrimSpace(message)
 
@@ -181,21 +181,21 @@ func formatMessageTerm(event map[string]interface{}) consoleText {
 
 	switch level {
 	case zerolog.TraceLevel:
-		return newConsoleText(message, "dim")
+		return &logElem{message, "dim", nil}
 	case zerolog.DebugLevel:
-		return newConsoleText(message, "dim")
+		return &logElem{message, "dim", nil}
 	case zerolog.InfoLevel:
-		return newConsoleText(message, "")
+		return &logElem{message, "", nil}
 	case zerolog.WarnLevel:
-		return newConsoleText(message, "yellow")
+		return &logElem{message, "yellow", nil}
 	case zerolog.ErrorLevel:
-		return newConsoleText(message, "red")
+		return &logElem{message, "red", nil}
 	case zerolog.FatalLevel:
-		return newConsoleText(message, "red")
+		return &logElem{message, "red", nil}
 	case zerolog.PanicLevel:
-		return newConsoleText(message, "red")
+		return &logElem{message, "red", nil}
 	default:
-		return newConsoleText(message, "")
+		return &logElem{message, "", nil}
 	}
 }
 
@@ -262,7 +262,7 @@ func formatFields(entry map[string]interface{}) string {
 	return fmt.Sprintf("    [bold]%s[reset]", strings.Join(fields, " "))
 }
 
-func formatFieldsTerm(entry map[string]interface{}) consoleText {
+func formatFieldsTerm(entry map[string]interface{}) *logElem {
 	// these are the fields we don't want to expose, either because they're
 	// already part of the Log structure or because they're internal
 	fieldSkipList := map[string]struct{}{
@@ -302,12 +302,12 @@ func formatFieldsTerm(entry map[string]interface{}) consoleText {
 	}
 
 	if len(fields) == 0 {
-		return newConsoleText("", "")
+		return &logElem{"", "", nil}
 	}
 	sort.SliceStable(fields, func(i, j int) bool {
 		return fields[i] < fields[j]
 	})
-	return newConsoleText("    "+strings.Join(fields, " "), "bold")
+	return &logElem{"    " + strings.Join(fields, " "), "bold", nil}
 }
 
 // hashColor returns a consistent color for a given string
