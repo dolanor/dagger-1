@@ -786,7 +786,7 @@ type logElem struct {
 }
 
 func (e *logElem) Len() int {
-	return len(e.String())
+	return ansi.PrintableRuneWidth(e.String())
 }
 
 func (e *logElem) String() string {
@@ -837,14 +837,10 @@ func (e *logElem) StyledString() string {
 		return text
 	}
 
-	// TODO use vt100 to calculate len
-	textLen := utf8.RuneCountInString(text)
-	if e.limitWidth > textLen {
-		e.limitWidth = textLen
-	}
-
 	for w := ansi.PrintableRuneWidth(text); w > e.limitWidth; w = ansi.PrintableRuneWidth(text) {
 		text = text[:len(text)-1]
+
+		// if we removed some part of a grapheme cluster, we might get non-UTF8 string or unprintable character; skip
 		if !utf8.ValidString(text) {
 			continue
 		}
@@ -854,19 +850,16 @@ func (e *logElem) StyledString() string {
 }
 
 func formatGroupLine(event Event, width int) (elem *logElem, nbLines int) {
-	le := &logElem{"%s%s", "", 0,
+	le := &logElem{"%s%s", "", width,
 		[]*logElem{
 			formatMessageTerm(event),
 			formatFieldsTerm(event),
 		},
 	}
 
-	le = trimLogElem(le, width)
-
 	le = padElem(le, width)
-	le.format += "\n"
 
-	dimmed := &logElem{"%s", "dim", 0,
+	dimmed := &logElem{"%s\n", "dim", width,
 		[]*logElem{
 			le,
 		},
