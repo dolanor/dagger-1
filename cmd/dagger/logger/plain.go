@@ -83,21 +83,21 @@ func formatLevelTerm(event map[string]interface{}) *logElem {
 
 	switch level {
 	case zerolog.TraceLevel:
-		return &logElem{"TRC", "magenta", nil}
+		return &logElem{"TRC", "magenta", 0, nil}
 	case zerolog.DebugLevel:
-		return &logElem{"DBG", "yellow", nil}
+		return &logElem{"DBG", "yellow", 0, nil}
 	case zerolog.InfoLevel:
-		return &logElem{"INF", "green", nil}
+		return &logElem{"INF", "green", 0, nil}
 	case zerolog.WarnLevel:
-		return &logElem{"WRN", "red", nil}
+		return &logElem{"WRN", "red", 0, nil}
 	case zerolog.ErrorLevel:
-		return &logElem{"ERR", "red", nil}
+		return &logElem{"ERR", "red", 0, nil}
 	case zerolog.FatalLevel:
-		return &logElem{"FTL", "red", nil}
+		return &logElem{"FTL", "red", 0, nil}
 	case zerolog.PanicLevel:
-		return &logElem{"PNC", "red", nil}
+		return &logElem{"PNC", "red", 0, nil}
 	default:
-		return &logElem{"???", "bold", nil}
+		return &logElem{"???", "bold", 0, nil}
 	}
 }
 
@@ -117,14 +117,14 @@ func formatTimestamp(event map[string]interface{}) string {
 func formatTimestampTerm(event map[string]interface{}) *logElem {
 	ts, ok := event[zerolog.TimestampFieldName].(string)
 	if !ok {
-		return &logElem{"???", "", nil}
+		return &logElem{"???", "", 0, nil}
 	}
 
 	t, err := time.Parse(zerolog.TimeFieldFormat, ts)
 	if err != nil {
 		panic(err)
 	}
-	return &logElem{t.Format(time.Kitchen), "dark_gray", nil}
+	return &logElem{t.Format(time.Kitchen), "dark_gray", 0, nil}
 }
 
 func formatMessage(event map[string]interface{}) string {
@@ -166,7 +166,7 @@ func formatMessage(event map[string]interface{}) string {
 func formatMessageTerm(event map[string]interface{}) *logElem {
 	message, ok := event[zerolog.MessageFieldName].(string)
 	if !ok {
-		return &logElem{"", "", nil}
+		return &logElem{"", "", 0, nil}
 	}
 	message = strings.TrimSpace(message)
 
@@ -181,21 +181,21 @@ func formatMessageTerm(event map[string]interface{}) *logElem {
 
 	switch level {
 	case zerolog.TraceLevel:
-		return &logElem{message, "dim", nil}
+		return &logElem{message, "dim", 0, nil}
 	case zerolog.DebugLevel:
-		return &logElem{message, "dim", nil}
+		return &logElem{message, "dim", 0, nil}
 	case zerolog.InfoLevel:
-		return &logElem{message, "", nil}
+		return &logElem{message, "", 0, nil}
 	case zerolog.WarnLevel:
-		return &logElem{message, "yellow", nil}
+		return &logElem{message, "yellow", 0, nil}
 	case zerolog.ErrorLevel:
-		return &logElem{message, "red", nil}
+		return &logElem{message, "red", 0, nil}
 	case zerolog.FatalLevel:
-		return &logElem{message, "red", nil}
+		return &logElem{message, "red", 0, nil}
 	case zerolog.PanicLevel:
-		return &logElem{message, "red", nil}
+		return &logElem{message, "red", 0, nil}
 	default:
-		return &logElem{message, "", nil}
+		return &logElem{message, "", 0, nil}
 	}
 }
 
@@ -302,12 +302,12 @@ func formatFieldsTerm(entry map[string]interface{}) *logElem {
 	}
 
 	if len(fields) == 0 {
-		return &logElem{"", "", nil}
+		return &logElem{"", "", 0, nil}
 	}
 	sort.SliceStable(fields, func(i, j int) bool {
 		return fields[i] < fields[j]
 	})
-	return &logElem{"    " + strings.Join(fields, " "), "bold", nil}
+	return &logElem{"    " + strings.Join(fields, " "), "bold", 0, nil}
 }
 
 // hashColor returns a consistent color for a given string

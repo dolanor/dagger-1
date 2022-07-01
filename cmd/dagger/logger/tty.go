@@ -14,6 +14,7 @@ import (
 
 	"github.com/containerd/console"
 	"github.com/morikuni/aec"
+	"github.com/muesli/ansi"
 	"github.com/tonistiigi/vt100"
 	"go.dagger.io/dagger/plan/task"
 	"golang.org/x/sync/errgroup"
@@ -480,7 +481,7 @@ func linesPerGroup(width, height int, messages []Message) int {
 }
 
 func formatEvent(event Event, width int) (message string, height int) {
-	le := &logElem{"%s %s %s%s", "",
+	le := &logElem{"%s %s %s%s", "", 0,
 		[]*logElem{
 			formatTimestampTerm(event),
 			formatLevelTerm(event),
@@ -778,6 +779,8 @@ func (l *logLine) StyledString() string {
 type logElem struct {
 	format string
 	style  string
+	// limitWidth will limit the amount of text printed on the screen
+	limitWidth int
 
 	children []*logElem
 }
@@ -827,14 +830,31 @@ func (e *logElem) StyledString() string {
 		return fmt.Sprintf(e.format, cc...)
 	}
 
-	colored := colorize.Color(fmt.Sprintf("[%s]%s[reset]", e.style, e.format))
+	text := colorize.Color(fmt.Sprintf("[%s]%s[reset]", e.style, e.format))
 
-	return fmt.Sprintf(colored, cc...)
+	// not set; we display it all
+	if e.limitWidth == 0 {
+		return text
+	}
+
+	// TODO use vt100 to calculate len
+	textLen := utf8.RuneCountInString(text)
+	if e.limitWidth > textLen {
+		e.limitWidth = textLen
+	}
+
+	for w := ansi.PrintableRuneWidth(text); w > e.limitWidth; w = ansi.PrintableRuneWidth(text) {
+		text = text[:len(text)-1]
+		if !utf8.ValidString(text) {
+			continue
+		}
+	}
+
+	return text
 }
 
 func formatGroupLine(event Event, width int) (elem *logElem, nbLines int) {
-
-	le := &logElem{"%s%s", "",
+	le := &logElem{"%s%s", "", 0,
 		[]*logElem{
 			formatMessageTerm(event),
 			formatFieldsTerm(event),
@@ -846,7 +866,7 @@ func formatGroupLine(event Event, width int) (elem *logElem, nbLines int) {
 	le = padElem(le, width)
 	le.format += "\n"
 
-	dimmed := &logElem{"%s", "dim",
+	dimmed := &logElem{"%s", "dim", 0,
 		[]*logElem{
 			le,
 		},

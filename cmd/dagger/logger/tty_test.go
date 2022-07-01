@@ -612,12 +612,12 @@ func TestTermLen(t *testing.T) {
 }
 
 func TestLogElemLen(t *testing.T) {
-	l := &logElem{"%v %v: %v %v", "",
+	l := &logElem{"%v %v: %v %v", "", 0,
 		[]*logElem{
-			{"12:28PM", "yellow", nil},
-			{"ERR", "red", nil},
-			{"YO", "cyan", nil},
-			{"LO", "magenta", nil},
+			{"12:28PM", "yellow", 0, nil},
+			{"ERR", "red", 0, nil},
+			{"YO", "cyan", 0, nil},
+			{"LO", "magenta", 0, nil},
 		},
 	}
 
