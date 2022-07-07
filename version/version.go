@@ -3,6 +3,7 @@ package version
 import (
 	"fmt"
 	"runtime"
+	"runtime/debug"
 )
 
 const (
@@ -19,7 +20,39 @@ var (
 )
 
 func Short() string {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return fmt.Sprintf("dagger %s (%s)", DevelopmentVersion, "")
+	}
+	settings := info.Settings
+
+	fmt.Println(settings)
+	Revision, ok = getSetting(settings, "vcs.revision")
+	if !ok {
+		return fmt.Sprintf("dagger %s (%s)", DevelopmentVersion, "")
+	}
+	// we take the short revision hash
+	Revision = Revision[:8]
+
+	modified, ok := getSetting(settings, "vcs.modified")
+	if !ok {
+		return fmt.Sprintf("dagger %s (%s)", DevelopmentVersion, "")
+	}
+
+	if modified == "true" {
+		Version = DevelopmentVersion
+	}
+
 	return fmt.Sprintf("dagger %s (%s)", Version, Revision)
+}
+
+func getSetting(settings []debug.BuildSetting, key string) (string, bool) {
+	for _, s := range settings {
+		if s.Key == key {
+			return s.Value, true
+		}
+	}
+	return "", false
 }
 
 func Long() string {
