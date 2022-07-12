@@ -33,9 +33,13 @@ const (
 )
 
 const (
-	markdownThemeDefault = markdownThemeDark
-	markdownThemeLight   = "light"
-	markdownThemeDark    = "dark"
+	markdownThemeDefault = markdownThemeAuto
+	// markdownThemAuto will use a light theme on light terminal and dark on dark ones.
+	markdownThemeAuto  = "auto"
+	markdownThemeASCII = "ascii"
+	markdownThemeDark  = "dark"
+	markdownThemeLight = "light"
+	markdownThemeNoTTY = "notty"
 )
 
 type Value struct {
@@ -268,9 +272,14 @@ var docCmd = &cobra.Command{
 
 		theme := viper.GetString("theme")
 		if format == markdownFormat &&
-			theme != markdownThemeLight &&
-			theme != markdownThemeDark {
-			lg.Fatal().Msg("markdown theme must be either `light`, `dark` or `json`")
+			!isThemeKnown(theme) {
+			lg.Fatal().Msgf("markdown theme must be either %q, %q, %q, %q or %q",
+				markdownThemeAuto,
+				markdownThemeASCII,
+				markdownThemeDark,
+				markdownThemeLight,
+				markdownThemeNoTTY,
+			)
 		}
 
 		output := viper.GetString("output")
@@ -301,7 +310,7 @@ var docCmd = &cobra.Command{
 
 func init() {
 	docCmd.Flags().StringP("format", "f", textFormat, "Output format (txt|md)")
-	docCmd.Flags().StringP("theme", "t", markdownThemeDefault, "Output Markdown theme (light|dark)")
+	docCmd.Flags().StringP("theme", "t", markdownThemeDefault, "Output Markdown theme (auto|ascii|light|dark|notty)")
 	docCmd.Flags().StringP("output", "o", "", "Output directory")
 
 	if err := viper.BindPFlags(docCmd.Flags()); err != nil {
@@ -435,4 +444,17 @@ func walkPackages(ctx context.Context, output, format, theme string) {
 		description := mdEscape(packages[p].Description)
 		fmt.Fprintf(index, "- [%s](./%s) - %s\n", p, getFileName(p), description)
 	}
+}
+
+func isThemeKnown(theme string) bool {
+	switch theme {
+	case markdownThemeAuto,
+		markdownThemeASCII,
+		markdownThemeDark,
+		markdownThemeLight,
+		markdownThemeNoTTY:
+		return true
+
+	}
+	return false
 }
