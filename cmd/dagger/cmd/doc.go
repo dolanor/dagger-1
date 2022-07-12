@@ -15,6 +15,7 @@ import (
 
 	"cuelang.org/go/cue"
 	"github.com/charmbracelet/glamour"
+	"github.com/muesli/ansi/compressor"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -139,6 +140,8 @@ func (p *Package) Format(f string, theme string) string {
 		if err != nil {
 			return p.Markdown()
 		}
+		// we remove unnecessary escape codes
+		out = compressor.String(out)
 		return out
 	default:
 		panic(f)
