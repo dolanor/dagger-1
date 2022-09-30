@@ -29,7 +29,7 @@ require (
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.11.0
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.8.0
 	github.com/tonistiigi/fsutil v0.0.0-20220315205639-9ed612626da3
 	github.com/tonistiigi/units v0.0.0-20180711220420-6950e57a87ea
 	github.com/tonistiigi/vt100 v0.0.0-20210615222946-8066bb97264f
@@ -43,7 +43,7 @@ require (
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac
 	golang.org/x/tools v0.1.8 // indirect
 	google.golang.org/grpc v1.46.0
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 replace (
