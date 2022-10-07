@@ -35,6 +35,24 @@ func TestDirectory(t *testing.T) {
 	}))
 }
 
+func TestDirectory(t *testing.T) {
+	t.Parallel()
+	require.NoError(t, engine.Start(context.Background(), nil, func(ctx engine.Context) error {
+		core := api.New(ctx.Client)
+
+		dir := directory.New()
+
+		contents, err := dir.
+			WithNewFile("/hello.txt", directory.WithContents("world")).
+			File("/hello.txt").
+			Contents(ctx)
+
+		require.NoError(t, err)
+		require.Equal(t, "world", contents)
+		return nil
+	}))
+}
+
 func TestGit(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, engine.Start(context.Background(), nil, func(ctx engine.Context) error {
