@@ -62,7 +62,13 @@ func WithNoExtensions() ClientOpt {
 }
 
 // Connect to a Dagger Engine
-func Connect(ctx context.Context, opts ...ClientOpt) (*Client, error) {
+func Connect(ctx context.Context, opts ...ClientOpt) (_ *Client, rerr error) {
+	defer func() {
+		if rerr != nil {
+			rerr = withErrorHelp(rerr)
+		}
+	}()
+
 	cfg := &engineconn.Config{}
 
 	for _, o := range opts {
@@ -86,7 +92,7 @@ func Connect(ctx context.Context, opts ...ClientOpt) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	c.gql = graphql.NewClient("http://dagger/query", client)
+	c.gql = errorWrappedClient{graphql.NewClient("http://dagger/query", client)}
 	return c, nil
 }
 
@@ -150,4 +156,16 @@ type Response struct {
 	Data       interface{}            `json:"data"`
 	Extensions map[string]interface{} `json:"extensions,omitempty"`
 	Errors     gqlerror.List          `json:"errors,omitempty"`
+}
+
+type errorWrappedClient struct {
+	graphql.Client
+}
+
+func (c errorWrappedClient) MakeRequest(ctx context.Context, req *graphql.Request, resp *graphql.Response) error {
+	err := c.Client.MakeRequest(ctx, req, resp)
+	if err != nil {
+		return withErrorHelp(err)
+	}
+	return nil
 }

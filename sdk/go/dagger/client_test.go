@@ -111,3 +111,16 @@ func TestContainer(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "3.16.2\n", contents)
 }
+
+func TestErrorMessage(t *testing.T) {
+	t.Parallel()
+	ctx := context.Background()
+
+	c, err := Connect(ctx)
+	require.NoError(t, err)
+	defer c.Close()
+
+	_, err = c.Core().Container().From("fake.invalid:latest").ID(ctx)
+	require.Error(t, err)
+	require.ErrorContains(t, err, errorHelpBlurb)
+}
