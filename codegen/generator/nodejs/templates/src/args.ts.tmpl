@@ -2,10 +2,12 @@
 	{{- $maxIndex := len . }}
 	{{- $maxIndex = Subtract $maxIndex 1 }}
 	{{- range $index, $value := . }}
-		{{- template "arg" . }}
-		{{- /* we add a "." only if it's not the last item */ -}}
+		{{- template "arg" . -}}
+
+		{{- /* we add a ", " only if it's not the last item */ -}}
 		{{- if ne $index $maxIndex -}}
 			{{ "" }}, {{ "" }}
 		{{- end }}
 	{{- end }}
 {{- end }}
+
