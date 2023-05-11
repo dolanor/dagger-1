@@ -14,7 +14,7 @@ require (
 	github.com/gogo/protobuf v1.3.2
 	github.com/hexops/gotextdiff v1.0.3
 	github.com/iancoleman/strcase v0.2.0
-	github.com/magefile/mage v1.14.0
+	github.com/magefile/mage v1.15.0
 	github.com/moby/buildkit v0.10.6
 	github.com/netlify/open-api/v2 v2.12.2
 	github.com/opencontainers/go-digest v1.0.0
