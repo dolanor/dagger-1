@@ -9,7 +9,7 @@ require (
 	github.com/containerd/containerd v1.6.10
 	github.com/dagger/graphql v0.0.0-20221102000338-24d5e47d3b72
 	github.com/dagger/graphql-go-tools v0.0.0-20221102001222-e68b44170936
-	github.com/docker/distribution v2.8.1+incompatible
+	github.com/docker/distribution v2.8.2+incompatible
 	github.com/go-openapi/runtime v0.24.2
 	github.com/gogo/protobuf v1.3.2
 	github.com/hexops/gotextdiff v1.0.3
