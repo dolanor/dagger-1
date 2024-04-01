@@ -17,7 +17,7 @@ require (
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/bubbletea v0.25.0
 	github.com/charmbracelet/lipgloss v0.9.1
-	github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81
+	github.com/containerd/console v1.0.4
 	github.com/containerd/containerd v1.7.12
 	github.com/containerd/continuity v0.4.3
 	github.com/containerd/fuse-overlayfs-snapshotter v1.0.6
@@ -105,8 +105,6 @@ require (
 	oss.terrastruct.com/d2 v0.6.1
 	oss.terrastruct.com/util-go v0.0.0-20231101220827-55b3812542c2
 )
-
-require github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81
 
 require (
 	cdr.dev/slog v1.4.2 // indirect
