@@ -13,7 +13,7 @@ attrs==23.2.0
     # via cattrs
 backoff==2.2.1
     # via gql
-beartype==0.17.0
+beartype==0.18.5
     # via -r requirements.in
 cattrs==23.2.3
     # via -r requirements.in
