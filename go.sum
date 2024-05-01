@@ -1483,14 +1483,6 @@ github.com/vishvananda/netns v0.0.4 h1:Oeaw1EM2JMxD51g9uhtC0D7erkIjgmj8+JZc26m1Y
 github.com/vishvananda/netns v0.0.4/go.mod h1:SpkAiCQRtJ6TvvxPnOSyH3BMl6unz3xZlaprSwhNNJM=
 github.com/vito/midterm v0.1.5-0.20240215023001-e649b2677bfa h1:2zKtb3ChJT0FBEt+AU64Rk3hT2kPjNf94QEyyDYaBaE=
 github.com/vito/midterm v0.1.5-0.20240215023001-e649b2677bfa/go.mod h1:2ujYuyOObdWrQtnXAzwSBcPRKhC5Q96ex0nsf2Dmfzk=
-github.com/vito/progrock v0.10.2-0.20240119030128-52ef9ee1a291 h1:VcLECqiOXx4PTEzsV0QlWVubUeE+k0ZclAlKpUuejo8=
-github.com/vito/progrock v0.10.2-0.20240119030128-52ef9ee1a291/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
-github.com/vito/progrock v0.10.2-0.20240216024921-b1a31734923f h1:rBajDxzdBWfwBUw6zB65a6sD0Jrti2xdh/SazmLsE4A=
-github.com/vito/progrock v0.10.2-0.20240216024921-b1a31734923f/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
-github.com/vito/progrock v0.10.2-0.20240216040120-c7cf9658d2ce h1:n7A1/7/zGs2YmxrhJM9tkiiceA2VMDjCBI/4F+SyToM=
-github.com/vito/progrock v0.10.2-0.20240216040120-c7cf9658d2ce/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
-github.com/vito/progrock v0.10.2-0.20240221021632-1a1211373001 h1:Le2v108rmYDDcHz8R06C1n91I1zPlt5/V4wHhsFGJz0=
-github.com/vito/progrock v0.10.2-0.20240221021632-1a1211373001/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
 github.com/vito/progrock v0.10.2-0.20240221152222-63c8df30db8d h1:hh9zh0tcr3/th/mtxEpzLVE8rvx+LejDrbWmqmi+RUM=
 github.com/vito/progrock v0.10.2-0.20240221152222-63c8df30db8d/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
 github.com/vmware/govmomi v0.20.3/go.mod h1:URlwyTFZX72RmxtxuaFL2Uj3fD1JTvZdx59bHWk6aFU=
@@ -2258,8 +2250,8 @@ google.golang.org/protobuf v1.26.0/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQ
 google.golang.org/protobuf v1.27.1/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
 google.golang.org/protobuf v1.28.0/go.mod h1:HV8QOd/L58Z+nl8r43ehVNZIU/HEI6OcFqwMG9pJV4I=
 google.golang.org/protobuf v1.28.1/go.mod h1:HV8QOd/L58Z+nl8r43ehVNZIU/HEI6OcFqwMG9pJV4I=
-google.golang.org/protobuf v1.32.0 h1:pPC6BG5ex8PDFnkbrGU3EixyhKcQ2aDuBS36lqK/C7I=
-google.golang.org/protobuf v1.32.0/go.mod h1:c6P6GXX6sHbq/GpV6MGZEdwhWPcYBgnhAHhKbcUYpos=
+google.golang.org/protobuf v1.34.0 h1:Qo/qEd2RZPCf2nKuorzksSknv0d3ERwp1vFG38gSmH4=
+google.golang.org/protobuf v1.34.0/go.mod h1:c6P6GXX6sHbq/GpV6MGZEdwhWPcYBgnhAHhKbcUYpos=
 gopkg.in/airbrake/gobrake.v2 v2.0.9/go.mod h1:/h5ZAUhDkGaJfjzjKLSjv6zCL6O0LLBxU4K+aSYdM/U=
 gopkg.in/alecthomas/kingpin.v2 v2.2.6/go.mod h1:FMv+mEhP44yOT+4EoQTLFTRgOQ1FBLkstjWtayDeSgw=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=

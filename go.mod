@@ -99,14 +99,12 @@ require (
 	golang.org/x/text v0.14.0
 	golang.org/x/tools v0.17.0
 	google.golang.org/grpc v1.61.0
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/protobuf v1.34.0
 	gopkg.in/yaml.v3 v3.0.1
 	gotest.tools/v3 v3.5.1
 	oss.terrastruct.com/d2 v0.6.1
 	oss.terrastruct.com/util-go v0.0.0-20231101220827-55b3812542c2
 )
-
-require github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81
 
 require (
 	cdr.dev/slog v1.4.2 // indirect
