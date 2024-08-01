@@ -6,8 +6,8 @@ replace dagger.io/dagger => ./sdk/go
 
 require (
 	dagger.io/dagger v0.9.11
-	github.com/99designs/gqlgen v0.17.41
-	github.com/Khan/genqlient v0.6.0
+	github.com/99designs/gqlgen v0.17.44
+	github.com/Khan/genqlient v0.7.0
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
 	github.com/Netflix/go-expect v0.0.0-20220104043353-73e0943537d2
 	github.com/a-h/templ v0.2.543
@@ -76,7 +76,7 @@ require (
 	github.com/tonistiigi/fsutil v0.0.0-20230825212630-f09800878302
 	github.com/tonistiigi/units v0.0.0-20180711220420-6950e57a87ea
 	github.com/urfave/cli v1.22.14
-	github.com/vektah/gqlparser/v2 v2.5.10
+	github.com/vektah/gqlparser/v2 v2.5.11
 	github.com/vito/midterm v0.1.5-0.20240215023001-e649b2677bfa
 	github.com/vito/progrock v0.10.2-0.20240221152222-63c8df30db8d
 	github.com/weaveworks/common v0.0.0-20230119144549-0aaa5abd1e63
@@ -88,16 +88,16 @@ require (
 	go.opentelemetry.io/otel/sdk v1.21.0
 	go.opentelemetry.io/otel/trace v1.21.0
 	go.opentelemetry.io/proto/otlp v1.0.0
-	golang.org/x/crypto v0.18.0
+	golang.org/x/crypto v0.19.0
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
-	golang.org/x/mod v0.14.0
-	golang.org/x/net v0.20.0
+	golang.org/x/mod v0.15.0
+	golang.org/x/net v0.21.0
 	golang.org/x/oauth2 v0.16.0
 	golang.org/x/sync v0.6.0
-	golang.org/x/sys v0.16.0
-	golang.org/x/term v0.16.0
+	golang.org/x/sys v0.17.0
+	golang.org/x/term v0.17.0
 	golang.org/x/text v0.14.0
-	golang.org/x/tools v0.17.0
+	golang.org/x/tools v0.18.0
 	google.golang.org/grpc v1.61.0
 	google.golang.org/protobuf v1.32.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -105,8 +105,6 @@ require (
 	oss.terrastruct.com/d2 v0.6.1
 	oss.terrastruct.com/util-go v0.0.0-20231101220827-55b3812542c2
 )
-
-require github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81
 
 require (
 	cdr.dev/slog v1.4.2 // indirect
@@ -201,7 +199,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/hashicorp/golang-lru/v2 v2.0.3 // indirect
+	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/in-toto/in-toto-golang v0.5.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
@@ -243,7 +241,7 @@ require (
 	github.com/sergi/go-diff v1.3.1 // indirect
 	github.com/shibumi/go-pathspec v1.3.0 // indirect
 	github.com/skeema/knownhosts v1.2.1 // indirect
-	github.com/sosodev/duration v1.1.0 // indirect
+	github.com/sosodev/duration v1.2.0 // indirect
 	github.com/spdx/tools-golang v0.5.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
