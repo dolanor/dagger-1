@@ -501,8 +501,8 @@ github.com/docker/docker v1.4.2-0.20180531152204-71cd53e4a197/go.mod h1:eEKB0N0r
 github.com/docker/docker v1.4.2-0.20190924003213-a8608b5b67c7/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/docker v17.12.0-ce-rc1.0.20200730172259-9f28837c1d93+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/docker v20.10.0-beta1.0.20201110211921-af34b94a78a1+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
-github.com/docker/docker v25.0.1+incompatible h1:k5TYd5rIVQRSqcTwCID+cyVA0yRg86+Pcrz1ls0/frA=
-github.com/docker/docker v25.0.1+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
+github.com/docker/docker v27.3.1+incompatible h1:KttF0XoteNTicmUtBO0L2tP+J7FGRFTjaEF4k6WdhfI=
+github.com/docker/docker v27.3.1+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/docker-credential-helpers v0.6.3/go.mod h1:WRaJzqw3CTB9bk10avuGsjVBZsD05qeibJ1/TYlvc0Y=
 github.com/docker/docker-credential-helpers v0.8.0 h1:YQFtbBQb4VrpoPxhFuzEBPQ9E16qz5SpHLS+uswaCp8=
 github.com/docker/docker-credential-helpers v0.8.0/go.mod h1:UGFXcuoQ5TxPiB54nHOZ32AWRqQdECoh/Mg0AlEYb40=
@@ -1088,6 +1088,8 @@ github.com/mitchellh/osext v0.0.0-20151018003038-5e2d6d41470f/go.mod h1:OkQIRizQ
 github.com/moby/buildkit v0.8.1/go.mod h1:/kyU1hKy/aYCuP39GZA9MaKioovHku57N6cqlKZIaiQ=
 github.com/moby/buildkit v0.13.0-beta3 h1:eefOGE6SsWYHFfymc09Q7VU5i3L9vUs8ZCZVCDXWNOo=
 github.com/moby/buildkit v0.13.0-beta3/go.mod h1:tSWWhq1EDM0eB3ngMNDiH2hOOW9fXTyn2uXuOraCLlE=
+github.com/moby/docker-image-spec v1.3.1 h1:jMKff3w6PgbfSa69GfNg+zN/XLhfXJGnEx3Nl2EsFP0=
+github.com/moby/docker-image-spec v1.3.1/go.mod h1:eKmb5VW8vQEh/BAr2yvVNvuiJuY6UIocYsFu/DxxRpo=
 github.com/moby/locker v1.0.1 h1:fOXqR41zeveg4fFODix+1Ch4mj/gT0NE1XJbp/epuBg=
 github.com/moby/locker v1.0.1/go.mod h1:S7SDdo5zpBK84bzzVlKr2V0hz+7x9hWbYC/kq7oQppc=
 github.com/moby/patternmatcher v0.6.0 h1:GmP9lR19aU5GqSSFko+5pRqHi+Ohk1O69aFiKkVGiPk=
@@ -1108,6 +1110,8 @@ github.com/moby/sys/signal v0.7.0 h1:25RW3d5TnQEoKvRbEKUGay6DCQ46IxAVTT9CUMgmsSI
 github.com/moby/sys/signal v0.7.0/go.mod h1:GQ6ObYZfqacOwTtlXvcmh9A26dVRul/hbOZn88Kg8Tg=
 github.com/moby/sys/user v0.1.0 h1:WmZ93f5Ux6het5iituh9x2zAG7NFY9Aqi49jjE1PaQg=
 github.com/moby/sys/user v0.1.0/go.mod h1:fKJhFOnsCN6xZ5gSfbM6zaHGgDJMrqt9/reuj4T7MmU=
+github.com/moby/sys/userns v0.1.0 h1:tVLXkFOxVu9A64/yh59slHVv9ahO9UIev4JZusOLG/g=
+github.com/moby/sys/userns v0.1.0/go.mod h1:IHUYgu/kao6N8YZlp9Cf444ySSvCmDlmzUcYfDHOl28=
 github.com/moby/term v0.0.0-20200915141129-7f0af18e79f2/go.mod h1:TjQg8pa4iejrUrjiz0MCtMV38jdMNW4doKSiBrEvCQQ=
 github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
 github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
@@ -1483,14 +1487,6 @@ github.com/vishvananda/netns v0.0.4 h1:Oeaw1EM2JMxD51g9uhtC0D7erkIjgmj8+JZc26m1Y
 github.com/vishvananda/netns v0.0.4/go.mod h1:SpkAiCQRtJ6TvvxPnOSyH3BMl6unz3xZlaprSwhNNJM=
 github.com/vito/midterm v0.1.5-0.20240215023001-e649b2677bfa h1:2zKtb3ChJT0FBEt+AU64Rk3hT2kPjNf94QEyyDYaBaE=
 github.com/vito/midterm v0.1.5-0.20240215023001-e649b2677bfa/go.mod h1:2ujYuyOObdWrQtnXAzwSBcPRKhC5Q96ex0nsf2Dmfzk=
-github.com/vito/progrock v0.10.2-0.20240119030128-52ef9ee1a291 h1:VcLECqiOXx4PTEzsV0QlWVubUeE+k0ZclAlKpUuejo8=
-github.com/vito/progrock v0.10.2-0.20240119030128-52ef9ee1a291/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
-github.com/vito/progrock v0.10.2-0.20240216024921-b1a31734923f h1:rBajDxzdBWfwBUw6zB65a6sD0Jrti2xdh/SazmLsE4A=
-github.com/vito/progrock v0.10.2-0.20240216024921-b1a31734923f/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
-github.com/vito/progrock v0.10.2-0.20240216040120-c7cf9658d2ce h1:n7A1/7/zGs2YmxrhJM9tkiiceA2VMDjCBI/4F+SyToM=
-github.com/vito/progrock v0.10.2-0.20240216040120-c7cf9658d2ce/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
-github.com/vito/progrock v0.10.2-0.20240221021632-1a1211373001 h1:Le2v108rmYDDcHz8R06C1n91I1zPlt5/V4wHhsFGJz0=
-github.com/vito/progrock v0.10.2-0.20240221021632-1a1211373001/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
 github.com/vito/progrock v0.10.2-0.20240221152222-63c8df30db8d h1:hh9zh0tcr3/th/mtxEpzLVE8rvx+LejDrbWmqmi+RUM=
 github.com/vito/progrock v0.10.2-0.20240221152222-63c8df30db8d/go.mod h1:Q8hxIUXZW8vkezLwH4TnRmXv+XdRb4KfLtS9t5RtH9g=
 github.com/vmware/govmomi v0.20.3/go.mod h1:URlwyTFZX72RmxtxuaFL2Uj3fD1JTvZdx59bHWk6aFU=
