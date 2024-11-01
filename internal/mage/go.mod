@@ -1,6 +1,7 @@
 module github.com/dagger/dagger/internal/mage
 
 go 1.21
+toolchain go1.22.5
 
 require (
 	dagger.io/dagger v0.9.11
@@ -8,11 +9,11 @@ require (
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/hexops/gotextdiff v1.0.3
 	github.com/magefile/mage v1.15.0
-	github.com/moby/buildkit v0.13.0-beta3
-	github.com/opencontainers/image-spec v1.1.0-rc5
-	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
-	golang.org/x/mod v0.14.0
-	golang.org/x/sync v0.6.0
+	github.com/moby/buildkit v0.17.0
+	github.com/opencontainers/image-spec v1.1.0
+	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0
+	golang.org/x/mod v0.21.0
+	golang.org/x/sync v0.8.0
 )
 
 require (
@@ -22,10 +23,9 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sosodev/duration v1.1.0 // indirect
 	github.com/vektah/gqlparser/v2 v2.5.10 // indirect
-	golang.org/x/sys v0.16.0 // indirect
+	golang.org/x/sys v0.26.0 // indirect
 )
 
 replace github.com/dagger/dagger => ../../
