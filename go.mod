@@ -30,7 +30,7 @@ require (
 	github.com/docker/cli v25.0.1+incompatible
 	github.com/docker/distribution v2.8.2+incompatible
 	github.com/docker/docker v25.0.1+incompatible
-	github.com/dschmidt/go-layerfs v0.1.0
+	github.com/dschmidt/go-layerfs v0.2.0
 	github.com/go-git/go-git/v5 v5.11.0
 	github.com/gofrs/flock v0.8.1
 	github.com/gogo/protobuf v1.3.2
@@ -105,8 +105,6 @@ require (
 	oss.terrastruct.com/d2 v0.6.1
 	oss.terrastruct.com/util-go v0.0.0-20231101220827-55b3812542c2
 )
-
-require github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81
 
 require (
 	cdr.dev/slog v1.4.2 // indirect
@@ -215,6 +213,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mattn/goveralls v0.0.12 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/mazznoer/csscolorparser v0.1.3 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
