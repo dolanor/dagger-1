@@ -60,5 +60,5 @@ sniffio==1.3.0
     # via
     #   anyio
     #   httpx
-yarl==1.9.4
+yarl==1.18.3
     # via aiohttp
